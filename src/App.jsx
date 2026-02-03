@@ -1,15 +1,20 @@
 import ToDoInput from './components/ToDoInput.jsx'
 import ToDoList from './components/ToDoList.jsx'
+import { useState } from 'react';
 
 function App() {
-    let todos = [
-        "Sample ToDo 1",
-        "Sample ToDo 2",
-        "Sample ToDo 3"
-    ];
+
+    const [todos, setTodos] = useState([ ]);
+
+
+    function handleAddTodos(newTodo) {
+      const newTodoList = [...todos, newTodo];
+      setTodos(newTodoList);
+    }
+
   return (
     <main>
-      <ToDoInput />
+      <ToDoInput handleAddTodos={handleAddTodos}/>
       <ToDoList todos={todos}/>   
     </main>
   )
