@@ -3,7 +3,7 @@ import ToDoCard from './ToDoCard';
 
 const ToDoList = ({todos, handleDeleteTodo, handleEditTodo}) => {
   return (
-    <ul className='main'>
+    <ul className="flex flex-col gap-4 overflow-y-auto pr-2">
         {todos.map((todo, todoIndex)=>{
             return(
                 <ToDoCard handleEditTodo={handleEditTodo} handleDeleteTodo={handleDeleteTodo} key={todoIndex} index={todoIndex}>
