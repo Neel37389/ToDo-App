@@ -1,7 +1,6 @@
 import React from 'react'
 
-const ToDoCard = (props) => {
-    const {children, handleDeleteTodo, index, handleEditTodo} = props;
+const ToDoCard = ({children, handleDeleteTodo, index, handleEditTodo}) => {
   return (
     <li className='todoItem'>
         {children}

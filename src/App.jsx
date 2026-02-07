@@ -1,37 +1,49 @@
-import ToDoInput from './components/ToDoInput.jsx'
-import ToDoList from './components/ToDoList.jsx'
-import { useState } from 'react';
+import ToDoInput from './components/ToDoInput';
+import ToDoList from './components/ToDoList';
+import { useState, useEffect } from 'react';
 
 function App() {
+  const [todos, setTodos] = useState(() => {
+    const stored = localStorage.getItem("todos");
+    return stored ? JSON.parse(stored) : [];
+  });
 
-    const [todos, setTodos] = useState([ ]);
-    const [todoValue, setTodoValue] = useState("");
+  const [todoValue, setTodoValue] = useState("");
 
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
-    function handleAddTodos(newTodo) {
-      const newTodoList = [...todos, newTodo];
-      setTodos(newTodoList);
-    }
+  function handleAddTodos(newTodo) {
+    if (!newTodo.trim()) return;
+    setTodos([...todos, newTodo]);
+    setTodoValue("");
+  }
 
-    function handleDeleteTodo(index) {
-      const newTodoList = todos.filter((todo, todIndex) =>{
-        return todIndex !== index;
-      })
-      setTodos(newTodoList);
-    }
+  function handleDeleteTodo(index) {
+    setTodos(todos.filter((_, i) => i !== index));
+  }
 
-    function handleEditTodo(index) {
-      const valueToBeEdited = todos[index];
-      setTodoValue(valueToBeEdited);
-      handleDeleteTodo(index);
-    }
+  function handleEditTodo(index) {
+    setTodoValue(todos[index]);
+    handleDeleteTodo(index);
+  }
 
   return (
     <main>
-      <ToDoInput todoValue={todoValue} setTodoValue={setTodoValue} handleAddTodos={handleAddTodos}/>
-      <ToDoList  handleEditTodo={handleEditTodo} todoValue={todoValue} handleDeleteTodo={handleDeleteTodo} todos={todos}/>   
+      <ToDoInput
+        todoValue={todoValue}
+        setTodoValue={setTodoValue}
+        handleAddTodos={handleAddTodos}
+      />
+
+      <ToDoList
+        todos={todos}
+        handleDeleteTodo={handleDeleteTodo}
+        handleEditTodo={handleEditTodo}
+      />
     </main>
-  )
+  );
 }
 
-export default App
+export default App;

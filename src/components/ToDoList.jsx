@@ -1,8 +1,7 @@
 import React from 'react'
 import ToDoCard from './ToDoCard';
 
-const ToDoList = (props) => {
-    const {todos, handleDeleteTodo, handleEditTodo} = props;
+const ToDoList = ({todos, handleDeleteTodo, handleEditTodo}) => {
   return (
     <ul className='main'>
         {todos.map((todo, todoIndex)=>{
